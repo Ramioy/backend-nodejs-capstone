@@ -14,8 +14,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname) // Use the original file name
-  },
-});
+  }
+})
 const upload = multer({ storage: storage })
 // Get all secondChanceItems
 router.get('/', async (req, res, next) => {
@@ -43,7 +43,7 @@ router.get('/:id', async (req, res, next) => {
   } catch (e) {
     next(e)
   }
-});
+})
 // Add a new item
 router.post('/', upload.single('file'), async (req, res, next) => {
   try {
@@ -54,15 +54,15 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     await lastItemQuery.forEach(item => {
       secondChanceItem.id = (parseInt(item.id) + 1).toString()
     });
-    const date_added = Math.floor(new Date().getTime() / 1000)
-    secondChanceItem.date_added = date_added;
+    const dateAdded = Math.floor(new Date().getTime() / 1000)
+    secondChanceItem.date_added = dateAdded;
     secondChanceItem = await collection.insertOne(secondChanceItem)
     console.log(secondChanceItem)
     res.status(201).json(secondChanceItem)
   } catch (e) {
     next(e)
   }
-});
+})
 // Update and existing item
 router.put('/:id', async (req, res, next) => {
   try {
@@ -86,14 +86,14 @@ router.put('/:id', async (req, res, next) => {
       { returnDocument: 'after' }
     );
     if (updatepreloveItem) {
-      res.json({ 'uploaded': 'success' })
+      res.json({ uploaded: 'success' })
     } else {
-      res.json({ 'uploaded': 'failed' })
+      res.json({ uploaded: 'failed' })
     }
   } catch (e) {
-    next(e);
+    next(e)
   }
-});
+})
 // Delete an existing item
 router.delete('/:id', async (req, res, next) => {
   try {
@@ -106,9 +106,9 @@ router.delete('/:id', async (req, res, next) => {
       return res.status(404).json({ error: 'secondChanceItem not found' })
     }
     const updatepreloveItem = await collection.deleteOne({ id })
-    res.json({ 'deleted': 'success' })
+    res.json({ deleted: 'success' })
   } catch (e) {
     next(e)
   }
-});
+})
 module.exports = router

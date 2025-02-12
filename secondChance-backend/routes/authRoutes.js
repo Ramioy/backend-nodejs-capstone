@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
     logger.error(e)
     return res.status(500).send('Internal server error')
   }
-});
+})
 
 router.post('/login', async (req, res) => {
   console.log('\n\n Inside login')
@@ -118,8 +118,8 @@ router.put('/update', async (req, res) => {
     const existingUser = await collection.findOne({ email })
 
     if (!existingUser) {
-      logger.error('User not found');
-      return res.status(404).json({ error: 'User not found' });
+      logger.error('User not found')
+      return res.status(404).json({ error: 'User not found' })
     }
 
     existingUser.firstName = req.body.name
@@ -147,5 +147,5 @@ router.put('/update', async (req, res) => {
     logger.error(error)
     return res.status(500).send('Internal Server Error')
   }
-});
+})
 module.exports = router

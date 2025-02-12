@@ -3,10 +3,10 @@ const express = require('express')
 // const axios = require('axios');
 const logger = require('./logger')
 const expressPino = require('express-pino-logger')({ logger })
-const natural = require("natural")
+const natural = require('natural')
 
 const app = express()
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(expressPino)
@@ -40,7 +40,7 @@ app.post('/sentiment', async (req, res) => {
     // Logging the result
     logger.info(`Sentiment analysis result: ${analysisResult}`)
     // Responding with the sentiment analysis result
-    res.status(200).json({ sentimentScore: analysisResult, sentiment: sentiment })
+    res.status(200).json({ sentimentScore: analysisResult, sentiment })
   } catch (error) {
     logger.error(`Error performing sentiment analysis: ${error}`)
     res.status(500).json({ message: 'Error performing sentiment analysis' })
